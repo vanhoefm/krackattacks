@@ -1,0 +1,600 @@
+/*********************************************************************************/
+/* Set all elements to default value                                             */
+/*********************************************************************************/
+
+html, body {
+	height: 100%;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background: #333333;
+	font-family: 'Muli', sans-serif;
+	font-size: 12pt;
+	font-weight: 350;
+	color: #363636;
+}
+
+@media screen and (max-width:780px) {
+	body {
+		font-size: 14px;
+		/*font-size: 1rem;*/
+		/*line-height: 23px;*/
+		line-height: 1.4375rem;
+		font-weight: 400;
+		font-family: georgia,"times new roman",times,serif;
+	}
+}
+  
+h1, h2, h3 {
+	margin: 0;
+	padding: 0;
+}
+
+p, ol, ul {
+	margin-top: 0px;
+}
+
+@media screen and (max-width:780px) {
+	ul { padding-left: 18px; }
+}
+
+@media screen and (min-width: 780px) {
+	p  { line-height: 180%; }
+}
+
+strong {
+	font-weight: bold;
+}
+
+a {
+	color: #171717;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a img {
+	border: none;
+}
+
+hr {
+	display: none;
+}
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+
+/*********************************************************************************/
+/* Wrappers                                                                      */
+/*********************************************************************************/
+
+#wrapper {
+	background: #FFFFFF url(../images/bg01.png) repeat;
+}
+
+.container {
+	margin: 0px auto;
+}
+
+.clearfix {
+	clear: both;
+}
+
+#header-wrapper
+{
+	overflow: hidden;
+	background-size: 100%;
+	/*background: #333333;*/
+}
+
+#footer-wrapper
+{
+	overflow: hidden;
+	padding: 4em 1em;
+	background: #1E1B1A;
+}
+
+/*********************************************************************************/
+/* Header and text-based logo                                                    */
+/*********************************************************************************/
+
+#header  {
+	position: relative;
+	overflow: hidden;
+	text-align: center;
+}
+
+
+#header  {
+	margin: 0 auto;
+	padding: 15px 0px 15px 0px;
+	
+	font-family: 'Muli', sans-serif;
+	font-size: 12pt;
+	font-weight: 350;
+	color: #363636;
+	line-height: normal;
+}
+
+#logo {
+	display: inline-block;
+	width: 180px;
+}
+
+#title {
+	display: inline-block;
+	font-size: 2.5em;
+	/* XXX https://stackoverflow.com/a/21190403 */
+	vertical-align: bottom;
+	text-align: center;
+	margin-left: 20px;
+}
+
+#header h1 {
+	/*letter-spacing: 0.10em;*/
+	font-size: 1.3em;
+	/*text-transform: uppercase;*/
+	font-weight: normal;
+	/*color: #fff;*/
+}
+
+#header h2 {
+	/*letter-spacing: 1px;*/
+	/*color: #FFF;*/
+	font-size: 0.9em;
+	padding-top: 20px;
+	font-weight: normal;
+	margin-bottom: 15px;
+}
+
+#header h3 {
+	margin-top: 40px;
+	margin-bottom: 30px;
+	
+	font-size: 0.45em;
+	font-weight: normal;
+	font-style: italic;
+	/*color: #909090;*/
+}
+
+#header p  {
+	margin-bottom: 0px;
+	/*color: #FFF;*/
+}
+
+#header a  {
+	/*text-decoration: none;*/
+	color: #125CCA;
+}
+
+@media screen and (min-width:780px) and (max-width:850px) {
+	#header  {
+		padding: 15px 0px 15px 0px;
+		font-size: 0.8em;
+	}
+	#logo {
+        width: 160px;
+	}
+}
+
+@media screen and (min-width:630px) and (max-width:780px) {
+	#logo {
+		width: 140px;
+	}
+	#header  {
+		padding: 15px 0px 15px 0px;
+		font-size: 0.8em;
+	}
+	#header h3 {
+	    margin-top: 35px;
+		margin-bottom: 20px;
+	}
+}
+
+@media screen and (max-width:630px) {
+	#title {
+		display: block;
+		margin: auto;
+		margin-top: 10px;
+	}
+	#header h3 {
+		margin-top: 20px;
+		margin-bottom: 15px
+	}
+	#header {
+		font-size: 0.8em;
+		padding: 10px 0px 5px 0px;
+	}
+	#logo {
+		width: 180px;
+	}
+}
+
+/*********************************************************************************/
+/* Main menu                                                                     */
+/*********************************************************************************/
+
+#menu-wrapper {
+	background: #00AABB;
+	
+	line-height: normal;
+	font-family: 'Muli', sans-serif;
+	font-size: 12pt;
+	font-weight: 350;
+	color: #363636;
+	
+	/*height: 100px;*/
+	
+	position:relative;
+}
+
+#main-nav {
+	overflow: hidden;
+	/*clear: both;*/
+	margin: 0px auto;
+	/*height: 70px;*/
+}
+
+#main-nav ul {
+	margin: 0;
+	padding: 0px;
+	list-style: none;
+	text-align: center;
+}
+
+#main-nav li {
+	display: inline-block;
+	background: #00AABB;
+}
+
+#main-nav a, #main-nav #menu_title {
+	display: block;
+	letter-spacing: 1px;
+	padding: 20px 35px;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 0.80em;
+	font-weight: 600;
+	border: none;
+	color: #FFF;
+}
+#main-nav #menu_title {
+	display: none;
+	background: #00AABB;
+	padding: 15px 20px;
+}
+
+
+#main-nav a:hover, #main-nav .current_page_item a {
+	text-decoration: none;
+}
+
+#main-nav #menu_button {
+	display: none;
+
+	margin-left: 50px;
+	background: transparent url("../images/down.png") no-repeat scroll 15px 18px;
+	cursor: pointer;
+	position: absolute;
+	left: 50%;
+	height: 8px;
+	width: 12px;
+	top: 0px;
+	/** prevent touch highlight on mobile devices */
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+@media screen and (min-width:560px) and (max-width:780px) {
+	#main-nav a { padding: 15px 20px; }
+}
+
+@media screen and (max-width:560px) {
+	#main-nav a { padding: 12px 20px; }
+	#main-nav li { float: none; width: 100%; }
+	.js #main-nav ul { position: absolute; z-index:9999; }
+	
+	.js #main-nav .menu {
+		display: none;
+	}
+	.js #main-nav #menu_button, .js #main-nav #menu_title {
+		display: block;
+	}
+	.js .responsive-toggle-open {
+		display: block;
+	}
+}
+
+/*********************************************************************************/
+/* Main page and content                                                         */
+/*********************************************************************************/
+
+
+#page {
+	position: relative;
+	overflow: hidden;
+	padding: 3em 1em 0em 1em;
+}
+
+#content {
+    margin: 0px auto 50px auto;
+	max-width: 920px;
+}
+
+#content li {
+    padding-bottom: 5px;
+    line-height: 150%;
+}
+
+
+/*********************************************************************************/
+/* Titles for sections (and subtitles)                                           */
+/*********************************************************************************/
+
+#content h2
+{
+	text-transform: uppercase;
+	letter-spacing: 0.20em;
+	font-weight: 700;
+	font-size: 2em;
+	color: #00AABB;
+	margin: 1.6em 0em 1.0em 0em;
+	/*margin-bottom: 1em;*/
+}
+
+@media screen and (max-width:780px) {
+	#content h2 {
+		letter-spacing: normal;
+	}
+}
+
+#content h3
+{
+	/*letter-spacing: 0.15em;*/
+	font-size: 1.10em;
+	font-weight: bold;
+	color: #00AABB;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-top: 30px;
+}
+
+/*
+TODO: Optionally a new div to put different line-height text in.
+.subtitle p
+{
+	line-height: 150%;
+}
+*/
+
+#content .firsttitle {
+	margin-top: 0px;
+}
+
+/*********************************************************************************/
+/* Other content                                                                 */
+/*********************************************************************************/
+
+#diagram {
+    margin: 0px auto;
+    margin-bottom: 15px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    background-image: url(../images/diagram.png);
+    height: 306px;
+}
+
+/**
+ * Scaling background image according to a given image ratio:
+ *
+ *    http://stackoverflow.com/questions/600743/how-to-get-div-height-to-auto-adjust-to-background-size
+ *
+ * This is only works properly if the image covers the complete width of the div, otherwise there is
+ * too much top-padding. Hence we only start doing this once the screen is smaller than image width.
+ * Additionally this is done depending on the specific image to get the correct ratios.
+ */
+@media screen and (max-width:640px) {
+    #diagram {
+        background-image: url(../images/diagram.png);
+        max-width: 640px;
+        width: 100%;
+        height: 0;
+        padding-top: 47.81%; /* (img-height / img-width * widthpercentage) */
+                             /* (       306 /       640 *             100) */
+    }
+}
+@media screen and (max-width:560px) {
+    #diagram {
+        background-image: url(../images/diagram_mobile.png);
+        width: 100%;
+        height: 0;
+        padding-top: 62.56%; /* (img-height / img-width * widthpercentage) */
+                             /* (       416 /       665 *             100) */
+    }
+}
+
+.demo-video {
+    text-align: center;
+	padding: 10px 0px 40px 0px;
+    width: 100%;
+	margin: 0px auto;
+}
+
+@media screen and (min-width:820px), screen and (max-height:350px) {
+    .demo-video {
+		width: 75%;
+	}
+}
+
+.demo-video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px; height: 0; overflow: hidden;
+}
+ 
+.demo-video-container iframe,
+.demo-video-container object,
+.demo-video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+/*********************************************************************************/
+/* Footer                                                                        */
+/*********************************************************************************/
+
+#footer
+{
+	max-width: 920px;
+	color: #ADADAD;
+}
+
+#footer #awards {
+	padding-bottom: 30px;
+	line-height: 150%;
+}
+
+#footer #awards a {
+	color: #FFF;
+	text-decoration: none;
+}
+
+#footer .title h2
+{
+	font-weight: 500;
+	font-size: 1.6em;
+	color: #FFF;
+}
+
+#footer .title
+{
+	border-color: #2D2926 !important;
+}
+
+#footer .style1 li
+{
+	border-color: #2D2926 !important;
+	padding: 0.5em 0px;
+}
+
+#footer .style1 a
+{
+	letter-spacing: 0.10em;
+	font-size:1em;
+	color: #B1B1B1;
+}
+
+#box-wrapper {
+	text-align: center;
+}
+
+#box1, #box2
+{
+	display: inline-block;
+}
+
+#box1 { margin-right: 100px; }
+/** First downscale: margin between boxes */
+@media screen and (max-width:820px) {
+	#box1 { margin-right: 10px; }
+}
+/** Boxes under each other: remove margins, increase text to fill screen, force same width on both */
+@media screen and (max-width:650px) {
+	#box1, #box2 { margin: 0px; width: 360px; }
+	#footer li { font-size: 16px; }
+}
+/** Final downscale: again reduce text size */
+@media screen and (max-width:390px) {
+	#box1, #box2 { margin: 0px; width: 250px; }
+	#footer li { font-size: 14px; }
+}
+
+/*********************************************************************************/
+/* List Styles                                                                   */
+/*********************************************************************************/
+
+ul.style1
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul.style1 li
+{
+	border-top: solid 1px #E5E5E5;
+	padding: 0.80em 0;
+}
+
+ul.style1 li:first-child
+{
+	border-top: 0;
+	padding-top: 0;
+}
+
+ul.style2
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul.style2 li
+{
+	border-top: solid 1px #E5E5E5;
+	padding: 0.80em 0;
+}
+
+ul.style2 li:first-child
+{
+	border-top: 0;
+	padding-top: 0;
+}
+
+
+/*********************************************************************************/
+/* Copyright                                                                     */
+/*********************************************************************************/
+
+#copyright
+{
+	overflow: hidden;
+	padding: 3em 0em 2em 0em;
+	text-align: center;
+}
+
+#copyright p
+{
+	letter-spacing: 0.20em;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 0.80em;
+	color: #6F6F6F;
+}
+
+#copyright a
+{
+	text-decoration: none;
+	color: #8C8C8C;
+}
+
+/*********************************************************************************/
+/* Browser-specific fixes                                                        */
+/*********************************************************************************/
+
+/** So click events are properly handled on iPhone */
+.clickable { cursor: pointer; }
+
