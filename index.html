@@ -243,12 +243,12 @@
 		<a name="tools"></a>
 		<h2>Tools</h2>
 		<p>We have made scripts to detect whether an implementation of the 4-way handshake, group key handshake, or Fast BSS Transition (FT) handshake is vulnerable to key reinstallation attacks.
-		These scripts will be released once we had the time to clean up their usage instructions.</p>
+		These scripts will be released once we have had the time to clean up their usage instructions.</p>
 		<p>We also made a proof-of-concept script that exploits the all-zero key (re)installation present in certain Android and Linux devices.
 		This script is the one that we used in the <a href="#demo">demonstration video</a>.
-		It will be released once everyone had a reasonable chance to update their devices (and we have had a chance to prepare the code repository for release).
+		It will be released once everyone has had a reasonable chance to update their devices (and we have had a chance to prepare the code repository for release).
 		We remark that the reliability of our proof-of-concept script may depend on how close the victim is to the real network.
-		If the victim is very close to the real network, the script may fail because the victim will always directly communicate with the real network, even if the victim is (forced) on a different Wi-Fi channel than this network.
+		If the victim is very close to the real network, the script may fail because the victim will always directly communicate with the real network, even if the victim is (forced) onto a different Wi-Fi channel than this network.
 		</p>	
 		
 		<!-------------------- Q&A -------------------->
@@ -256,7 +256,7 @@
 		<a name="faq" ></a>
 		<h2>Q&amp;A</h2>
 			<h3 class="firsttitle">Do we now need WPA3?</h3>
-			<p>No, luckily <strong>implementations can be patched in a backwards-compatible manner</strong>. This means a patched client can still communicate with an unpatched access point, and vice versa. In other words, a patched client or access points sends exactly the same handshake messages as before, and at exactly the same moments in time. However, the security updates will assure a key is only installed once, preventing our attacks. So again, update all your devices once security updates are available.</p>
+			<p>No, luckily <strong>implementations can be patched in a backwards-compatible manner</strong>. This means a patched client can still communicate with an unpatched access point, and vice versa. In other words, a patched client or access point sends exactly the same handshake messages as before, and at exactly the same moment in time. However, the security updates will assure a key is only installed once, preventing our attack. So again, update all your devices once security updates are available.</p>
 			
 			<a name="changepw" ></a>
 			<h3>Should I change my Wi-Fi password?</h3>
@@ -292,8 +292,8 @@
 			Put differently, the formal models did not define when a negotiated key should be installed.
 			In practice, this means the same key can be installed multiple times, thereby resetting nonces and replay counters used by the encryption protocol (e.g. by WPA-TKIP or AES-CCMP).</p>
 
-			<h3>Some attacks in paper seem hard</h3>
-			<p>We have follow-up work making our attacks (against for example macOS and OpenBSD) significantly more general and easier to execute.
+			<h3>Some attacks in the paper seem hard</h3>
+			<p>We have follow-up work making our attacks (against macOS and OpenBSD for example) significantly more general and easier to execute.
 			So although we agree that some of the attack scenarios in the paper are rather impractical, do not let this fool you into believing key reinstallation attacks cannot be abused in practice.</p>
 
 			<h3>If an attacker can do a man-in-the-middle attack, why can't he just decrypt all the data?</h3>
@@ -302,7 +302,7 @@
 			This position only allows the attacker to reliably delay, block, or replay <em>encrypted</em> packets.
 			So at this point in the attack, he or she cannot yet decrypt packets.
 			Instead, the ability to reliably delay and block packets is used to execute a key reinstallation attack.
-			After performing a key reinstallation attacks, packets can be decrypted.</p>
+			After performing a key reinstallation attack, packets can be decrypted.</p>
 
 			<h3>Are people exploiting this in the wild?</h3>
 			<p>We are not in a position to determine if this vulnerability has been (or is being) actively exploited in the wild. That said, key reinstallations can actually occur spontaneously without an adversary being present! This may for example happen if the last message of a handshake is lost due to background noise, causing a retransmission of the previous message. When processing this retransmitted message, keys may be reinstalled, resulting in nonce reuse just like in a real attack.</p>
