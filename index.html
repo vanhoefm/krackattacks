@@ -296,6 +296,14 @@
 			<p>We have follow-up work making our attacks (against for example macOS and OpenBSD) significantly more general and easier to execute.
 			So although we agree that some of the attack scenarios in the paper are rather impractical, do not let this fool you into believing key reinstallation attacks cannot be abused in practice.</p>
 
+			<h3>If an attacker can do a man-in-the-middle attack, why can't he just decrypt all the data?</h3>
+			<p>As mentioned in the demonstration, the attacker first obtains a man-in-the-middle (MitM) position between the victim and the real Wi-Fi network (called a <a href="https://lirias.kuleuven.be/bitstream/123456789/473761/1/acsac2014.pdf">channel-based MitM position</a>).
+			However, this MitM position does not enable the attacker to decrypt packets!
+			This position only allows the attacker to reliably delay, block, or replay <em>encrypted</em> packets.
+			So at this point in the attack, he or she cannot yet decrypt packets.
+			Instead, the ability to reliably delay and block packets is used to execute a key reinstallation attack.
+			After performing a key reinstallation attacks, packets can be decrypted.</p>
+
 			<h3>Are people exploiting this in the wild?</h3>
 			<p>We are not in a position to determine if this vulnerability has been (or is being) actively exploited in the wild. That said, key reinstallations can actually occur spontaneously without an adversary being present! This may for example happen if the last message of a handshake is lost due to background noise, causing a retransmission of the previous message. When processing this retransmitted message, keys may be reinstalled, resulting in nonce reuse just like in a real attack.</p>
 
