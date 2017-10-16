@@ -220,10 +220,11 @@
 		
 		<p>We would like to highlight the following addendums and errata:</p>
 		
-		<h3>Addendum: wpa_supplicant v2.6</h3>
+		<h3>Addendum: wpa_supplicant v2.6 and Android 6.0+</h3>
 		
 		<p>Linux's wpa_supplicant v2.6 is also vulnerable to the installation of an all-zero encryption key in the 4-way handshake.
 		This was discovered by John A. Van Boxtel.
+		As a result, all Android versions higher than 6.0 are also affected by the attack, and hence can be tricked into installing an all-zero encryption key.
 		The new attack works by injecting a forged message 1, with the same ANonce as used in the original message 1, before forwarding the retransmitted message 3 to the victim.
 		<!-- TODO: !!! Include more information about the cause and workings of this attack !!! -->
 		</p>
