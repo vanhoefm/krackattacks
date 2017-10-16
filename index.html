@@ -293,7 +293,7 @@
 
 			<h3>Some attacks in paper seem hard</h3>
 			<p>We have follow-up work making our attacks (against for example macOS and OpenBSD) significantly more general and easier to execute.
-			So although we agree that some of the attack scenarios in the paper are rather impractical, do not let this fool you into believing key reinstallations attacks cannot be abused in practice.</p>
+			So although we agree that some of the attack scenarios in the paper are rather impractical, do not let this fool you into believing key reinstallation attacks cannot be abused in practice.</p>
 
 			<h3>Are people exploiting this in the wild?</h3>
 			<p>We are not in a position to determine if this vulnerability has been (or is being) actively exploited in the wild. That said, key reinstallations can actually occur spontaneously without an adversary being present! This may for example happen if the last message of a handshake is lost due to background noise, causing a retransmission of the previous message. When processing this retransmitted message, keys may be reinstalled, resulting in nonce reuse just like in a real attack.</p>
