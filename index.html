@@ -122,7 +122,7 @@
 			<h3>Key reinstallation attacks: high level description</h3>
 			<p>In a key reinstallation attack, the adversary tricks a victim into reinstalling an already-in-use key.
 			This is <strong>achieved by manipulating and replaying cryptographic handshake messages</strong>.
-			When the victim reinstalls the key, associated parameters such as the incremental transmit packet number (i.e. nonce) and receive packet number (i.e. replay counter) are reset to their initial value.
+			When the victim reinstalls the key, associated parameters such as the incremental transmit packet number (i.e. nonce) and received packet number (i.e. replay counter) are reset to their initial value.
 			Essentially, to guarantee security, a key should only be installed and used once.
 			Unfortunately, we found this is not guaranteed by the WPA2 protocol.
 			By manipulating cryptographic handshakes, we can abuse this weakness in practice.</p>
