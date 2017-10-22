@@ -299,12 +299,12 @@
 			<p>Yes, it is possible to modify the access point such that connected clients cannot be attacked.
 			These modifications only prevent attacks when a vulnerable client is connected to such a modified access point.
 			When a vulnerable client connects to a different access point, it can still be attacked.</p>
-			<p>Technically, this is accomplished by modifying the access point such that it does not retransmit message 4 of the 4-way handshake.
+			<p>Technically, this is accomplished by modifying the access point such that it does not retransmit message 3 of the 4-way handshake.
 			Additionally, the access point is modified to not retransmit message 1 of the group key handshake.
 			The <a href="https://w1.fi/cgit/hostap/commit/?id=6f234c1e2ee1ede29f2412b7012b3345ed8e52d3">hostapd project has such a modification available</a>.
 			They are currently evaluating to which extend this impacts the reliability of these handshakes.
 			We remark that it's also possible to prevent attacks against clients by retransmitting the above handshake messages using the same (previous) EAPOL-Key replay counter.
-			The attack against the group key handshake is also prevented if the access point installs the group key in a delayed fashion, and if the access only accepts the latest replay counter (see <a href="#paper">section 4.3 of the paper</a> for details).
+			The attack against the group key handshake can also be prevented by letting the access point install the group key in a delayed fashion, and by assuring the access only accepts the latest replay counter (see <a href="#paper">section 4.3 of the paper</a> for details).
 			</p>
 
 			<h3>How did you discover these vulnerabilities?</h3>
