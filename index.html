@@ -283,18 +283,18 @@
 			<!-- Note: there might be implementations bugs where replay of msg4/4 causes a key reinstallation attack -->
 			<p>Our main attack is against the 4-way handshake, and does not exploit access points, but instead targets clients. So it might be that your router does not require security updates. We strongly advise you to contact your vendor for more details. In general though, you can try to mitigate attacks against routers and access points by disabling client functionality (which is for example used in repeater modes) and disabling 802.11r (fast roaming). For ordinary home users, your priority should be updating clients such as laptops and smartphones.</p>
 
-			<a name="patch-client-and-ap">
+			<a name="patch-client-and-ap"></a>
 			<h3>Is it sufficient to patch only the access point? Or to patch only clients?</h3>
 			<p>Currently, all vulnerable devices should be patched.
 			In other words, patching the AP will not prevent attacks against vulnerable clients.
 			Similarly, patching all clients will not prevent attacks against vulnerable access points.
-			Note that only access points that support the Fast BSS Transition handshake (802.11r) can be vulnerable.<p>
+			Note that only access points that support the Fast BSS Transition handshake (802.11r) can be vulnerable.</p>
 			<p>
 			That said, we are working on <a href="#ap-mitigations">access points modifications that do prevent attacks against vulnerable clients</a>.
 			These modifications are different from the security patches for vulnerable access points!
 			So unless your access point vendor explicitly mentions that their patches prevent attacks against clients, you must also patch clients.</p>
 
-			<a name="ap-mitigations">
+			<a name="ap-mitigations"></a>
 			<h3>Can we modify an access point to prevent attacks against the client?</h3>
 			<p>Yes, it is possible to modify the access point such that connected clients cannot be attacked.
 			These modifications only prevent attacks when a vulnerable client is connected to such a modified access point.
