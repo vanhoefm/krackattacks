@@ -147,7 +147,7 @@
 			We base this judgement on two observations.
 			First, during our own research we found that most clients were affected by it.
 			Second, adversaries can use this attack to decrypt packets sent by clients, allowing them to intercept sensitive information such as passwords or cookies.
-			Decryption of packets is possible because a key reinstallation attack causes the transmit nonces (sometimes also called packet numbers or initialization vectors) to be reset to zero.
+			Decryption of packets is possible because a key reinstallation attack causes the transmit nonces (sometimes also called packet numbers or initialization vectors) to be reset to their initial value.
 			As a result, <strong>the same encryption key is used with nonce values that have already been used in the past</strong>.
 			In turn, this causes all encryption protocols of WPA2 to reuse <a href="https://en.wikipedia.org/wiki/Keystream">keystream</a> when encrypting packets.
 			In case a message that reuses keystream has known content, it becomes trivial to derive the used keystream.
