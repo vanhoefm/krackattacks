@@ -342,13 +342,22 @@
 			The attack against the group key handshake can also be prevented by letting the access point install the group key in a delayed fashion, and by assuring the access only accepts the latest replay counter (see <a href="#paper">section 4.3 of the paper</a> for details).
 			</p>
 
+			<a name="updateno11r"></a>
+			<h3>My access point (router) doesn't support 802.11r (FT). Should I still update it?</h3>
+			<p>In general this means your access point (router) doesn't require updates.
+			However, some vendors discovered implementation-specific security issues while investigating their product.
+			For example, it was discovered that hostapd reuses the previous ANonce during a rekey.
+			Concretely this me.
+			<b>Technically, if your access point interally uses hostapd, you should always update.</b>
+			</p>
+
 			<a name="howdiscovered" ></a>
 			<h3>How did you discover these vulnerabilities?</h3>
 			<p>When working on the final (i.e. camera-ready) version of <a href="https://lirias.kuleuven.be/bitstream/123456789/572634/1/asiaccs2017.pdf">another paper</a>, I was double-checking some claims we made regarding OpenBSD's implementation of the 4-way handshake. In a sense I was slacking off, because I was supposed to be just finishing the paper, instead of staring at code. But there I was, inspecting some code I already read a hundred times, to avoid having to work on the next paragraph. It was at that time that a particular call to <a href="https://github.com/openbsd/src/blob/ca7fda7e2ae9fcf15b882d71bc910143e6b0d09b/sys/net80211/ieee80211_pae_input.c#L519">ic_set_key</a> caught my attention. This function is called when processing message 3 of the 4-way handshake, and it installs the pairwise key to the driver. While staring at that line of code I thought <i>&ldquo;Ha. I wonder what happens if that function is called twice&rdquo;</i>. At the time I (correctly) guessed that calling it twice might reset the nonces associated to the key. And since message 3 can be retransmitted by the Access Point, in practice it might indeed be called twice. <i>&ldquo;Better make a note of that. Other vendors might also call such a function twice. But let's first finish this paper...&rdquo;</i>. A few weeks later, after finishing the paper and completing some other work, I investigated this new idea in more detail. And the rest is history.</p>
 			
 			<a name="securityproof" ></a>
 			<h3>The 4-way handshake was mathematically proven as secure. How is your attack  possible?</h3>
-			<p>The brief answer is that the formal proof does not assure a key is installed once. Instead, it only assures the negotiated key remains secret, and that handshake messages cannot be forged.</p>
+			<p>The brief answer is that the formal proof does not assure a key is installed only once. Instead, it merely assures the negotiated key remains secret, and that handshake messages cannot be forged.</p>
 			<p>The longer answer is mentioned in <a href="#paper">the introduction of our research paper</a>: our attacks do not violate the security properties proven in formal analysis of the 4-way handshake.
 			In particular, these proofs state that the negotiated encryption key remains private, and that the identity of both the client and Access Point (AP) is confirmed.
 			Our attacks do not leak the encryption key.
