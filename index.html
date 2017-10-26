@@ -88,6 +88,7 @@
 		</p>
 		<div class="demo-video">
 		<div class="demo-video-container">
+			<!-- <iframe width="853" height="480" src="https://player.vimeo.com/video/238827849" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
 			<iframe width="853" height="480" src="https://www.youtube-nocookie.com/embed/Oh4WURZoR98?rel=0&amp;showinfo=0&amp;vq=hd720" frameborder="0" allowfullscreen></iframe>
 		</div>
 		</div>
@@ -252,7 +253,12 @@
 		</p>	
 		
 		<!-------------------- Q&A -------------------->
-			
+
+		<!--
+			- Is there an advantage in hiding the SSID of my network?
+			- Does the attacker need to be part of the network?
+		-->
+
 		<a name="faq" ></a>
 		<h2>Q&amp;A</h2>
 
@@ -316,7 +322,12 @@
 			<a name="norouterupdates" ></a>
 			<h3>What if there are no security updates for my router?</h3>
 			<!-- Note: there might be implementations bugs where replay of msg4/4 causes a key reinstallation attack -->
-			<p>Our main attack is against the 4-way handshake, and does not exploit access points, but instead targets clients. So it might be that your router does not require security updates. We strongly advise you to contact your vendor for more details. In general though, you can try to mitigate attacks against routers and access points by disabling client functionality (which is for example used in repeater modes) and disabling 802.11r (fast roaming). For ordinary home users, your priority should be updating clients such as laptops and smartphones.</p>
+			<p>Our main attack is against the 4-way handshake, and does not exploit access points, but instead targets clients.
+			So it might be that your router does not require security updates (also see <a href="updateno11r">this question</a>).
+			We strongly advise you to contact your vendor for more details.
+			In general though, you can try to mitigate attacks against routers and access points by disabling client functionality (which is for example used in repeater modes) and disabling 802.11r (fast roaming).
+			<!-- Note: or updating router with extra countermeasures. But there likely won't be available. -->
+			For ordinary home users, your priority should be updating clients such as laptops and smartphones.</p>
 
 			<a name="patch-client-and-ap"></a>
 			<h3>Is it sufficient to patch only the access point? Or to patch only clients?</h3>
@@ -331,7 +342,8 @@
 
 			<a name="ap-mitigations"></a>
 			<h3>Can we modify an access point to prevent attacks against the client?</h3>
-			<p>Yes, it is possible to modify the access point such that connected clients cannot be attacked.
+			<!-- TODO: Investigate WNM Sleep Mode Response frames in more detail, especially in combination with the group key handshake -->
+			<p>It's possible to modify the access point such that connected clients are not vulnerable to attacks against the 4-way handshake and group key handshake (note that we consider these the most serious and widespread vulnerabilities).
 			These modifications only prevent attacks when a vulnerable client is connected to such a modified access point.
 			When a vulnerable client connects to a different access point, it can still be attacked.</p>
 			<p>Technically, this is accomplished by modifying the access point such that it does not retransmit message 3 of the 4-way handshake.
@@ -345,9 +357,9 @@
 			<a name="updateno11r"></a>
 			<h3>My access point (router) doesn't support 802.11r (FT). Should I still update it?</h3>
 			<p>In general this means your access point (router) doesn't require updates.
-			However, some vendors discovered implementation-specific security issues while investigating their product.
-			For example, it was discovered that hostapd reuses the previous ANonce during a rekey.
-			Concretely this me.
+			However, some vendors discovered implementation-specific security issues while investigating our attack.
+			For example, it was discovered that hostapd reuses the ANonce value during rekeys.
+			Therefore, routers using hostapd
 			<b>Technically, if your access point interally uses hostapd, you should always update.</b>
 			</p>
 
