@@ -361,6 +361,9 @@
 			We remark that the client-side attacks against the 4-way handshake and group key handshake can also be prevented by retransmitting the above handshake messages using the same (previous) EAPOL-Key replay counter.
 			The attack against the group key handshake can also be prevented by letting the access point install the group key in a delayed fashion, and by assuring the access point only accepts the latest replay counter (see <a href="#paper">section 4.3 of the paper</a> for details).
 			</p>
+			<p>On some products, variants or generalizations of the above mitigations can be enabled without having to update products.
+			<!-- TODO: Link to a more general overview of products instead of only mentioning one -->
+			For example, some access points allow one to disable all handshake retransmissions, preventing client-side attacks against the 4-way and group key handshake (<a href="https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20171016-wpa#workarounds">see for example Cisco</a>).</p>
 
 			<a name="howdiscovered" ></a>
 			<h3>How did you discover these vulnerabilities?</h3>
