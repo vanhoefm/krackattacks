@@ -268,7 +268,7 @@
 				<li><a href="#onlyaes">I'm using WPA2 with only AES. That's also vulnerable?</a></li>
 				<li><a href="#authors">You use the word "we" in this website. Who is we?</a></li>
 				<li><a href="#amivulnerable">Is my device vulnerable?</a></li>
-				<li><a href="#norouterupdates">What if there are no security updates for my router?</a></li>
+				<li><a href="#norouterupdates">What if there are no security updates for my router? Or if it does not support 802.11r?</a></li>
 				<li><a href="#patch-client-and-ap">Is it sufficient to patch only the access point? Or to patch only clients?</a></li>
 				<li><a href="#ap-mitigations">Can we modify an access point to prevent attacks against the client?</a></li>
 				<li><a href="#howdiscovered">How did you discover these vulnerabilities?</a></li>
@@ -320,14 +320,21 @@
 			<p>Probably. Any device that uses Wi-Fi is likely vulnerable. Contact your vendor for more information.</p>
 			
 			<a name="norouterupdates" ></a>
-			<h3>What if there are no security updates for my router?</h3>
-			<!-- Note: there might be implementations bugs where replay of msg4/4 causes a key reinstallation attack -->
-			<p>Our main attack is against the 4-way handshake, and does not exploit access points, but instead targets clients.
-			So it might be that your router does not require security updates (also see <a href="updateno11r">this question</a>).
-			We strongly advise you to contact your vendor for more details.
-			In general though, you can try to mitigate attacks against routers and access points by disabling client functionality (which is for example used in repeater modes) and disabling 802.11r (fast roaming).
-			<!-- Note: or updating router with extra countermeasures. But there likely won't be available. -->
-			For ordinary home users, your priority should be updating clients such as laptops and smartphones.</p>
+			<h3>What if there are no security updates for my router? Or if it does not support 802.11r?</h3>
+			<p>
+			Routers are only vulnerable to our attack if they support the Fast BSS Transition (FT) handshake.
+			This handshake is part of 802.11r, which is mainly supported by enterprise networks, and not home routers.
+			In other words, your home router likely does not require security updates (since it likely does not support 802.11r).
+			It are mainly enterprise networks that will have to update their network infrastructure (i.e. their routers and access points).</p>
+			<!-- Note: there might also be other implementations bugs where replay of msg4/4 causes a key reinstallation attack -->
+			<p>That said, some vendors discovered implementation-specific security issues while investigating our attack.
+			For example, it was discovered that <a href="https://w1.fi/security/2017-1/wpa-packet-number-reuse-with-replayed-messages.txt">hostapd reuses the ANonce value</a> in the 4-way handshake during rekeys.
+			Concretely this means that, even if your router does not support 802.11r, it might still have to be updated.
+			Contact your vendor for more details.
+			</p>
+			<p>Finally, we remark that you can try to mitigate attacks against routers and access points by disabling client functionality (which is for example used in repeater modes) and disabling 802.11r (fast roaming).
+			Additionally, update all your other client devices such as laptops and smartphones.
+			If one or more of your client devices is not receiving updates, you can also try to contact your router's vendor and ask if they have an <a href="#ap-mitigations">update that prevents attacks against connected devices</a>.</p>
 
 			<a name="patch-client-and-ap"></a>
 			<h3>Is it sufficient to patch only the access point? Or to patch only clients?</h3>
@@ -343,8 +350,9 @@
 			<a name="ap-mitigations"></a>
 			<h3>Can we modify an access point to prevent attacks against the client?</h3>
 			<!-- TODO: Investigate WNM Sleep Mode Response frames in more detail, especially in combination with the group key handshake -->
-			<p>It's possible to modify the access point such that connected clients are not vulnerable to attacks against the 4-way handshake and group key handshake (note that we consider these the most serious and widespread vulnerabilities).
-			These modifications only prevent attacks when a vulnerable client is connected to such a modified access point.
+			<p>It's possible to modify the access point (router) such that connected clients are not vulnerable to attacks against the 4-way handshake and group key handshake.
+			Note that we consider these two attacks the most serious and widespread security issues we discovered.
+			However, these modifications only prevent attacks when a vulnerable client is connected to such a modified access point.
 			When a vulnerable client connects to a different access point, it can still be attacked.</p>
 			<p>Technically, this is accomplished by modifying the access point such that it does not retransmit message 3 of the 4-way handshake.
 			Additionally, the access point is modified to not retransmit message 1 of the group key handshake.
@@ -352,15 +360,6 @@
 			They are currently evaluating to which extend this impacts the reliability of these handshakes.
 			We remark that the client-side attacks against the 4-way handshake and group key handshake can also be prevented by retransmitting the above handshake messages using the same (previous) EAPOL-Key replay counter.
 			The attack against the group key handshake can also be prevented by letting the access point install the group key in a delayed fashion, and by assuring the access point only accepts the latest replay counter (see <a href="#paper">section 4.3 of the paper</a> for details).
-			</p>
-
-			<a name="updateno11r"></a>
-			<h3>My access point (router) doesn't support 802.11r (FT). Should I still update it?</h3>
-			<p>In general this means your access point (router) doesn't require updates.
-			However, some vendors discovered implementation-specific security issues while investigating our attack.
-			For example, it was discovered that hostapd reuses the ANonce value during rekeys.
-			Therefore, routers using hostapd
-			<b>Technically, if your access point interally uses hostapd, you should always update.</b>
 			</p>
 
 			<a name="howdiscovered" ></a>
