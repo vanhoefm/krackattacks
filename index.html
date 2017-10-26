@@ -350,7 +350,7 @@
 			Additionally, the access point is modified to not retransmit message 1 of the group key handshake.
 			The <a href="https://w1.fi/cgit/hostap/commit/?id=6f234c1e2ee1ede29f2412b7012b3345ed8e52d3">hostapd project has such a modification available</a>.
 			They are currently evaluating to which extend this impacts the reliability of these handshakes.
-			We remark that it's also possible to prevent attacks against clients by retransmitting the above handshake messages using the same (previous) EAPOL-Key replay counter.
+			We remark that it's also possible to prevent (most) attacks against clients by retransmitting the above handshake messages using the same (previous) EAPOL-Key replay counter.
 			The attack against the group key handshake can also be prevented by letting the access point install the group key in a delayed fashion, and by assuring the access point only accepts the latest replay counter (see <a href="#paper">section 4.3 of the paper</a> for details).
 			</p>
 
