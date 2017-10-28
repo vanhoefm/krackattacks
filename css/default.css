@@ -382,6 +382,14 @@ TODO: Optionally a new div to put different line-height text in.
 /* Bibtex entry                                                                  */
 /*********************************************************************************/
 
+.indent {
+	padding-left: 40px;
+}
+
+@media screen and (max-width:780px) {
+	.indent { padding-left: 18px; }
+}
+
 pre {
     display: block;
     padding: 9.5px;
