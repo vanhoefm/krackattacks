@@ -282,7 +282,7 @@
 				<li><a href="#onlyaes">I'm using WPA2 with only AES. That's also vulnerable?</a></li>
 				<li><a href="#authors">You use the word "we" in this website. Who is we?</a></li>
 				<li><a href="#amivulnerable">Is my device vulnerable?</a></li>
-				<li><a href="#norouterupdates">What if there are no security updates for my router? Or if it does not support 802.11r?</a></li>
+				<li><a href="#norouterupdates">What if there are no security updates for my router or access point? Or if it does not support 802.11r?</a></li>
 				<li><a href="#patch-client-and-ap">Is it sufficient to patch only the access point? Or to patch only clients?</a></li>
 				<li><a href="#ap-mitigations">Can we modify an access point to prevent attacks against the client?</a></li>
 				<li><a href="#howdiscovered">How did you discover these vulnerabilities?</a></li>
@@ -334,19 +334,20 @@
 			<p>Probably. Any device that uses Wi-Fi is likely vulnerable. Contact your vendor for more information.</p>
 			
 			<a name="norouterupdates" ></a>
-			<h3>What if there are no security updates for my router? Or if it does not support 802.11r?</h3>
+			<h3>What if there are no security updates for my router or access point? Or if it does not support 802.11r?</h3>
 			<p>
-			Routers are only vulnerable to our attack if they support the Fast BSS Transition (FT) handshake.
-			This handshake is part of 802.11r, which is mainly supported by enterprise networks, and not home routers.
-			In other words, your home router likely does not require security updates (since it likely does not support 802.11r).
-			It are mainly enterprise networks that will have to update their network infrastructure (i.e. their routers and access points).</p>
+			Routers or access points (APs) are only vulnerable to our attack if they support the Fast BSS Transition (FT) handshake, or if they support client (repeater) functionality.
+			First, the FT handshake is part of 802.11r, and is mainly supported by enterprise networks, and not by home routers or APs.
+			Additionally, most home routers or APs do not support (or will not use) client functionality.
+			In other words, your home router or AP likely does not require security updates.
+			Instead, it are mainly enterprise networks that will have to update their network infrastructure (i.e. their routers and access points).</p>
 			<!-- Note: there might also be other implementations bugs where replay of msg4/4 causes a key reinstallation attack -->
 			<p>That said, some vendors discovered implementation-specific security issues while investigating our attack.
 			For example, it was discovered that <a href="https://w1.fi/security/2017-1/wpa-packet-number-reuse-with-replayed-messages.txt">hostapd reuses the ANonce value</a> in the 4-way handshake during rekeys.
-			Concretely this means that, even if your router does not support 802.11r, it might still have to be updated.
+			Concretely this means that, even if your router or AP does not support 802.11r, and even if it does not support client functionality, it might still have to be updated.
 			Contact your vendor for more details.
 			</p>
-			<p>Finally, we remark that you can try to mitigate attacks against routers and access points by disabling client functionality (which is for example used in repeater modes) and disabling 802.11r (fast roaming).
+			<p>Finally, we remark that you can try to mitigate attacks against routers and APs by disabling client functionality (which is for example used in repeater modes) and disabling 802.11r (fast roaming).
 			Additionally, update all your other client devices such as laptops and smartphones.
 			If one or more of your client devices is not receiving updates, you can also try to contact your router's vendor and ask if they have an <a href="#ap-mitigations">update that prevents attacks against connected devices</a>.</p>
 
