@@ -293,6 +293,7 @@
 				<li><a href="#securityproof">The 4-way handshake was mathematically proven as secure. How is your attack  possible?</a></li>
 				<li><a href="#attackarehard">Some attacks in the paper seem hard</a></li>
 				<li><a href="#channelmitm">If an attacker can do a man-in-the-middle attack, why can't they just decrypt all the data?</a></li>
+				<li><a href="#proximity">Does an attacker to have be near your network in order to attack it?</a></li>
 				<li><a href="#isitexploited">Are people exploiting this in the wild?</a></li>
 				<li><a href="#dontusewep">Should I temporarily use WEP until my devices are patched?</a></li>
 				<li><a href="#wifistandard">Will the Wi-Fi standard be updated to address this?</a></li>
@@ -414,6 +415,16 @@
 			So at this point in the attack, they cannot yet decrypt packets.
 			Instead, the ability to reliably delay and block packets is used to execute a key reinstallation attack.
 			After performing a key reinstallation attack, packets can be decrypted.</p>
+
+			<a name="proximity" ></a>
+			<h3>Does an attacker to have be near your network in order to attack it?</h3>
+			<p>An adversary has to be within range of both the client being attacked (meaning the smartphone or laptop) and the network itself.
+			This means an adversary on the other side of the world cannot attack you remotely.
+			However, the attacker can still be relatively far way.
+			That's because special antenna can be used to carry out the attack from <a href="https://www.mattparkinson.eu/designer-cantenna/">two miles</a> to up to <a href="https://leaksource.files.wordpress.com/2013/12/nsa-ant-nightstand.jpg?w=604&h=781">eight miles</a> in ideal conditions.
+			Additionally, the attacker is not competing with the signal strength of the real Wi-Fi network, but instead uses so-called Channel Switch Announcements to manipulate and attack the client.
+			As a result, it is possible to successfully carry out attacks even when far away from the victim.
+			</p>
 
 			<a name="isitexploited" ></a>
 			<h3>Are people exploiting this in the wild?</h3>
