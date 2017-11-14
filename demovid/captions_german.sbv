@@ -1,0 +1,189 @@
+0:00:00.000,0:00:04.300
+Dieses Video basiert auf den Bericht "Key Reinstallation Attacks: Forcing Nonce Reuse in WPA2" (CCS 2017)
+
+0:00:04.500,0:00:07.440
+In dieser Demonstration wird gezeigt wie diese Lücke, die in WPA2 entdeckt wurde ...
+
+0:00:07.440,0:00:10.400
+... verwendet werden kann um Android und Linux Geräte zu attackieren.
+
+0:00:10.540,0:00:13.980
+Zuerst werde ich ein Android-Gerät verwenden, um eine Wi-Fi Verbindung mit unserem "testnetwork" herzustellen.
+
+0:00:14.020,0:00:16.080
+Zurzeit wird die Sicherheitslücke noch nicht ausgenutzt.
+
+0:00:16.260,0:00:19.020
+Beachten Sie, dass das Netzwerk WPA2-Verschlüsselung verwendet
+
+0:00:19.020,0:00:21.300
+Dies wird durch das Schloss-Symbol angedeutet
+
+0:00:21.480,0:00:24.220
+Wenn wir nun zum Beispiel match.com besuchen ...
+
+0:00:24.220,0:00:27.620
+... sehen wir, dass Android HTTPS als zusätzliche Schutzschicht verwendet
+
+0:00:27.780,0:00:30.340
+Dies wird durch das grüne HTTPS-Schloss bestätigt ...
+
+0:00:30.340,0:00:33.780
+... und wird zusätzlich in der Seiten-Info erwähnt.
+
+0:00:33.780,0:00:40.600
+Mit anderen Worten sind alle übertragenen Daten durch WPA2 und zusätzlich HTTPS geschützt.
+
+0:00:41.320,0:00:45.140
+Starten wir nun die Tools, die wir verwenden werden, um Android und Linux Geräte zu attackieren.
+
+0:00:45.660,0:00:49.300
+Zunächst wird der folgende Befehl verwendet, um den WPA2 Angriff-Skript zu starten
+
+0:00:49.380,0:00:52.960
+Im Befehl wird das geschütze Wi-Fi Netwerk angegeben, welches attackiert werden sollte.
+
+0:00:53.160,0:00:55.680
+In diesem Netzwerk wird nur ein spezifisches Gerät überwacht.
+
+0:00:56.020,0:00:59.760
+Beim Start wird das Tool zuerst das gesicherte Wi-Fi Netzwerk suchen, welches wir attackieren wollen.
+
+0:01:00.340,0:01:02.560
+Danach werden wir dieses Netzwerk auf einem anderen Kanal klonen.
+
+0:01:02.560,0:01:07.420
+Dieser bösartige Klon des Wi-Fi Netzwerk ermöglicht es den Angreifer zuverlässig Handshake-Nachrichten zu manipulieren.
+
+0:01:07.420,0:01:10.460
+Dies ist erforderlich, um die Sicherheitslücke auszunutzen.
+
+0:01:11.000,0:01:15.460
+Nun stellen Sie sicher, dass das Opfer über unser bösartiges Wi-Fi Netzwerk Zugriff auf das Internet hat.
+
+0:01:15.760,0:01:19.100
+Zusätzlich wird nun das sslstrip-Tool ausgeführt.
+
+0:01:19.100,0:01:24.040
+Dieses Tool wird versuchen, den zusätzlichen HTTPS Schutz von nicht ordnungsgemäß konfigurierten Websites zu entfernen.
+
+0:01:24.780,0:01:29.420
+Nun werde ich Wireshark verwenden, um alle Daten die der Client überträgt zu erfassen.
+
+0:01:33.740,0:01:35.860
+Sie sind nun bereit, den Angriff durchzuführen
+
+0:01:36.000,0:01:40.300
+Lass uns nun das Smartphone mit dem WPA2 geschützten Wi-Fi Netzwerk "testnetwork" verbinden.
+
+0:01:40.700,0:01:42.295
+Sobald das Opfer Wi-Fi aktiviert ...
+
+0:01:42.295,0:01:44.535
+... wird Android nach dem "testnetwork" suchen.
+
+0:01:45.960,0:01:51.600
+Sobald es dieses Netzwerk entdeckt, wird es versuchen mit dem realen "testnetwork" zu verbinden. Das ist nicht was wir wollen.
+
+0:01:51.900,0:01:58.020
+Zum Glück können wir dies durch das Senden spezieller Wi-Fi-Frames lösen. Diese befehlen dem Android Gerät zu einem anderen Kanal zu wechseln.
+
+0:01:58.260,0:02:01.920
+Dieser Trick bringt das Android-Gerät dazu, sich zum bösen Klon des Wi-Fi Netzwerks zu verbinden.
+
+0:02:02.460,0:02:07.500
+Im Wesentlichen haben wir jetzt eine "Man-in-the-middle"-Position zwischen dem Opfer und dem realen Wi-Fi-Netzwerk.
+
+0:02:07.620,0:02:10.500
+Dies ermöglicht es uns die Nachrichten zuverlässig zu manipulieren ...
+
+0:02:10.500,0:02:13.900
+... und die "Key reinstallation attack" (KRACK) gegen den 4-Wege-Handshake auszuführen.
+
+0:02:13.980,0:02:16.380
+Normalerweise wird nach der Ausführung eines solchen Angriffs ...
+
+0:02:16.380,0:02:19.540
+... das Opfer "Nonces" wiederverwenden um Daten-Frames zu verschlüsseln.
+
+0:02:19.540,0:02:22.420
+Dies ermöglicht es uns, alle verschlüsselten Daten wiederherzustellen.
+
+0:02:22.500,0:02:24.780
+Jedoch aufgrund eines implementierungs Fehler ...
+
+0:02:24.780,0:02:28.105
+bei Android und Linux werden die tatsächlichen geheimen Schlüssel nicht neu installiert.
+
+0:02:28.105,0:02:31.535
+Stattdessen werden sie einen "all-zero"-Verschlüsselungsschlüssel installieren.
+
+0:02:31.580,0:02:36.820
+Dies macht den Versuch alle Daten des Gerätes abzufangen und zu manipulieren recht einfach.
+
+0:02:37.760,0:02:42.940
+Wenn wir jetzt zu Wireshark gehen, können wir sehen, dass eine erhebliche Menge an Daten abgefangen wurde.
+
+0:02:43.200,0:02:49.020
+Beachten Sie, dass normalerweise alle diese Daten mittels WPA2 verschlüsselt und somit unlesbar für den Angreifer wären.
+
+0:02:49.240,0:02:52.820
+Wir können nun jedoch ohne das Passwort von diesem geschützen Wi-Fi Netzwerk zu wissen ...
+
+0:02:52.820,0:02:55.440
+... alle Pakete lesen, die das Opfer sendet.
+
+0:02:55.460,0:02:59.740
+Dies zeigt deutlich auf, dass wir erfolgreich WPA2 umgangen sind.
+
+0:03:00.620,0:03:04.000
+Lass uns jetzt eine Website auf dem Android-Gerät des Opfers besuchen
+
+0:03:04.065,0:03:06.855
+Wir werden wieder match.com besuchen.
+
+0:03:10.520,0:03:15.360
+Wie Sie jetzt sehen können, ist nun kein grünes HTTPS-Schloss mehr auf der Adressleiste des Browsers ersichtlich.
+
+0:03:15.420,0:03:20.000
+Dies bedeutet, dass die Webseite nun HTTPS nicht mehr als zusätzliche Schutzschicht verwendet.
+
+0:03:20.460,0:03:24.260
+Durch das sslstrip-Tool sind wir HTTPS umgangen.
+
+0:03:24.260,0:03:29.540
+Ist eine HTTPS geschützte Webseite richtig konfiguriert, kann der zusätzliche Schutz nicht umgangen werden.
+
+0:03:29.545,0:03:32.020
+Trotzdem funktioniert es für eine signifikante Anzahl von Webseiten.
+
+0:03:32.500,0:03:37.120
+Leider erkennen viele Benutzer nicht, dass HTTPS nicht mehr verwendet wird ...
+
+0:03:37.120,0:03:41.180
+... und deshalb melden diese sich mit ihren echten E-Mail-Adressen und Passwörter an.
+
+0:03:45.100,0:03:49.720
+Der Angreifer ist nun in der Lage, die E-Mail-Adresse und das Passwort des Opfers abzufangen.
+
+0:03:49.720,0:03:52.200
+Natürlich ist dies nur eine Demonstration. Hier wird ein gefälschte Konto verwendet.
+
+0:03:52.200,0:03:54.040
+Dies sehen wir, da das Anmelden fehlschlägt.
+
+0:03:54.320,0:03:58.100
+Dennoch ist der Angreifer in der Lage zu sehen, welches Passwort wir versuchen haben zu verwenden.
+
+0:03:58.100,0:04:01.040
+Lassen uns also zum Angreifer wechseln und den Login-Versuch suchen.
+
+0:04:07.220,0:04:12.620
+Wir können sehen, dass der Angreifer tatsächlich in der Lage ist, den Benutzernamen und das Passwort abzufangen.
+
+0:04:13.600,0:04:19.400
+!!! Um zu verhindern, dass Sie ein Opfer von dieser Attacke gegen WPA2 werden, müssen sie alle ihre Wi-Fi fähige Geräte updaten. !!!
+
+0:04:19.680,0:04:25.340
+Übersetzt von Zyranus
+
