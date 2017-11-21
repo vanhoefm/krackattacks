@@ -12,3 +12,4 @@ Chinese (China)
 Chinese (Simplified)
 German
 Russian
+Portuguese (Brazil)
