@@ -174,7 +174,7 @@ sup {
 	color: #125CCA;
 }
 
-@media screen and (min-width:780px) and (max-width:850px) {
+@media screen and (min-width:780px) and (max-width:920px) {
 	#header  {
 		padding: 15px 0px 15px 0px;
 		font-size: 0.8em;
