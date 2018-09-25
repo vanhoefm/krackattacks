@@ -366,6 +366,19 @@ sup {
 	margin-top: 30px;
 }
 
+#content h3 a
+{
+	/*letter-spacing: 0.15em;*/
+	font-size: 1.10em;
+	font-weight: bold;
+	color: #00AABB;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-top: 30px;
+
+	text-decoration: none;
+}
+
 /*
 TODO: Optionally a new div to put different line-height text in.
 .subtitle p
@@ -463,7 +476,7 @@ pre {
 
 .demo-video-container {
     position: relative;
-    padding-bottom: 56.25%;
+    padding-bottom: 71%;
     padding-top: 30px; height: 0; overflow: hidden;
 }
  

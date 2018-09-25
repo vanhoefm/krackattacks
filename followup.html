@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="no-js">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Auditing KRACKs in Wi-Fi</title>
+	<meta name="keywords" content="WPA2, KRACK, key reinstallation, security protocols, network security, attacks, nonce reuse, handshake, packet number, initialization vector, Mathy Vanhoef" />
+	<meta name="description" content="This website presents the Key Reinstallation Attack (KRACK). It breaks the WPA2 protocol by forcing nonce reuse in encryption algorithms used by Wi-Fi." />
+	<link href="css/default.css" rel="stylesheet" type="text/css" media="all" />
+	
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/modernizr.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/respond.src.js"></script>
+	<![endif]-->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-35642360-3"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-35642360-3');
+	</script>
+</head>
+<body>
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<img src="images/logo-small.png" width="100%"/>
+			</div>
+			<div id="title">
+				<h1>Auditing KRACKs in Wi-Fi</h1>
+				<h2 style="font-size: 0.8em;">Preventing all attacks is hard in practice</h2>
+				
+				<h3>By <a href="https://twitter.com/vanhoefm">Mathy Vanhoef</a> of <a href="https://www.imec-int.com/">imec</a>-<a href="https://distrinet.cs.kuleuven.be/">DistriNet</a>, KU Leuven, 2018</h3>
+			</div>
+			
+		</div>
+	</div>
+	<div id="menu-wrapper">
+		<div id="main-nav" class="container">
+			<span class="custom-mobile-menu-title" style="display: none;">Navigate page</span>
+			<ul class="menu">
+				<li class="page_item"><a href="#intro">Intro</a></li>
+				<li class="page_item"><a href="#details">Details</a></li>
+				<li class="page_item"><a href="#paper">Paper</a></li>
+				<li class="page_item"><a href="#tools">Tools</a></li>
+				<li class="page_item"><a href="#faq">Q&amp;A</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="page" class="container">
+	<div id="content">
+		<!-------------------- INTRO -------------------->
+
+		<a name="intro" ></a>
+		<h2 class="firsttitle">Introduction</h2>
+		<p>
+		After discovering <a href="https://www.krackattacks.com/">key reinstallation attacks (KRACKs)</a> against WPA2 last year,
+		which allowed an attacker to recover data sent over a protected Wi-Fi network,
+		we investigated whether products were properly updated to prevent attacks.
+		Although we found that most vendors properly updated their products, in certain cases attacks were still possible.
+		Apart from this, we also discovered techniques to bypass Wi-Fi's official defense against KRACK,
+		allowing an adversary to replay broadcast and multicast frames.
+		We are now also disclosing easier and more effective techniques to attack unpatched Wi-Fi devices.
+		Finally, in new our paper we explain in more detail how to abuse certain vulnerabilities that were already disclosed last year.
+		</p>
+		<p>
+		The good news is that most vendors already distributed (new) updates to prevent attacks,
+		and that the impact of replaying broadcast and multicast frames is low in practice.
+		Therefore <strong>most users should not worry</strong>, simply follow the usual security advice and keep your devices up to date.
+		In other words, <strong>our new paper and results are not as serious as the original key reinstallation attacks</strong>.
+		Nevertheless, our research is a good reminder that patching vulnerabilities can be hard in practice,
+		and that we must keep checking whether devices are properly updated.
+		</p>
+		<p>
+		All our new findings are described in detail in our research paper <a href="#paper">"Release the Kraken: New KRACKs in the 802.11 Standard"</a>
+		which will be presented at the <a href="https://www.sigsac.org/ccs/CCS2018/program/#crypto-attacks">Computer and Communications Security (CCS)</a>
+		conference this year.
+		</p>
+
+		<!-------------------- DETAILS -------------------->
+			
+		<a name="details" ></a>
+		<h2>Details</h2>
+
+			<p>
+			Before explaining our new results, it's good to quickly recap our original findings.
+			The following BCC video provides an excellent summary:
+			</p>
+
+			<div class="demo-video">
+			<div class="demo-video-container">
+				<iframe align="middle" width="600" height="490" frameborder="0" src="https://www.bbc.com/news/av/embed/p05k3mmr/41635516"></iframe>
+			</div>
+			</div>
+
+			<h3><a name="overview" href="#overview">Overview of our new results</a></h3>
+			<p>
+			In our new paper, <strong>we extend the original KRACK attack in several directions</strong>.
+			First, we improve existing attacks against the 4-way handshake, making it easier to attack unpatched devices.
+			We then study the Wi-Fi standard, and find that the FILS handshake is also vulnerable to key reinstallations.
+			Fortunately, this handshake is not yet deployed in practice.
+			Apart from this, the paper also shows how WNM power-save features can be abused to bypass Wi-Fi's official countermeasure against KRACK.
+			Finally, we investigate whether products were properly updated to prevent key reinstallations,
+			and discovered implementation-specific vulnerabilities related to key reinstallation attacks
+			(e.g. we found vulnerabilities in macOS and iOS that have in the meantime been patched).
+			</p>
+			<p>
+			The paper also describes how to abuse certain vulnerabilities that we already disclosed last year, but that were not yet discussed in detail.
+			In particular, the paper explains how WNM power-save features can be abused to trigger reinstallations of the group key,
+			and how the TPK handshake can be manipulated into reinstalling the TPK key.
+			The TPK handshake enables direct connectivity between clients (e.g. between smart TV's and a tablets).
+			</p>
+
+			<h3><a name="improved" href="#improved">Improved 4-way handshake attacks</a></h3>
+
+			<p>
+			We first increase the practicality of key reinstallation attacks against the 4-way handshake.
+			Previously, device-specific and hard-to-win race conditions had to be used to exploit the 4-way handshake of Android, macOS, and OpenBSD.
+			This was necessary, because otherwise these platforms would not accept the plaintext handshake message that triggers the key reinstallation.
+			We overcame these limitations by generating an encrypted (instead of plaintext) handshake message that triggers the key reinstallation.
+			As a result, an <strong>adversary no longer has to rely on hard-to-win race conditions to exploit vulnerable implementations of the 4-way handshake</strong>.
+			</p>
+
+			<h3><a name="filstpk" href="#filstpk">Attacking the FILS and TPK handshake</a></h3>
+
+			<p>
+			A systematic analysis of the Wi-Fi standard revealed that <strong>the Fast Initial Link Setup (FILS) and Tunneled direct-link setup PeerKey (TPK) handshake are also vulnerable to key reinstallations</strong>.
+			The FILS handshake can establish a secure Internet connection in only 100 ms,
+			and is expected to be widely adopted in highly mobile environments.
+			The TPK handshake is mainly used to stream data from a device to a smart TV, and establishes a direct tunnel between two clients.
+			Fortunately, the FILS handshake is not yet used in practice, and the vulnerability in the TPK handshake was already patched during the coordinated disclosure last year.
+			</p>
+
+			<h3><a name="bypass" href="#bypass">Bypassing Wi-Fi's official countermeasure</a></h3>
+
+			<p>
+			We also found that an adversary can abuse WNM-Sleep frames to bypass Wi-Fi's official defense against KRACK.
+			That's because the <a href="https://mentor.ieee.org/802.11/dcn/17/11-17-1602-03-000m-nonce-reuse-prevention.docx">official defense states that a device shouldn't reinstall an already in-use key</a>.
+			However, this defense can by bypassed by first letting the victim install a new key, to then let it (re)install an old key.
+			On a technical level, this is achieved by exploiting interactions between EAPOL-Key frames and WNM-Sleep frames.
+			An adversary can only reinstall the (integrity) group key in this manner.
+			As a result, the impact of this bypass is low in practice.
+			Note that WNM-Sleep frames are part of the 802.11v amendment to the Wi-Fi standard.
+			</p>
+			<p>
+			We also found implementation-specific vulnerabilities where the group key is improperly installed.
+			For example, we found that certain devices always install the group key with a zero replay counter.
+			More troublesome, we even discovered some devices that always accept replayed broadcast and multicast frames.
+			All combined, this shows that <strong>securely handling and installing group keys is a non-trivial task</strong>.
+			</p>
+
+			<h3><a name="impl" href="#impl">Implementation-specific vulnerabilities</a></h3>
+
+			<p>
+			Last but not least, <strong>we discovered several implementation-specific key reinstallation vulnerabilities</strong> while inspecting patches and open source code.
+			For example, even after the patches that prevent the KRACK attack,
+			macOS reused the SNonce during rekeys of the session key.
+			As another example, iOS did not properly install the (integrity) group key.
+			These vulnerabilities have a similar impact as the original KRACK attacks.
+			Another noteworthy vulnerability is that some routers accept replayed message 4's of the 4-way handshake.
+			In particular, <a href="https://wikidevi.com/wiki/MediaTek_MT7620">more than 100 routers that use the MediaTek MT7620 chip<a/>,
+			such as the RT-AC51U, are vulnerable to this attack.
+			An adversary can abuse this to trivially trigger key reinstallations against the router,
+			without having to obtain a man-in-the-middle position.
+			In turn it becomes possible to decrypt, replay, and possibly forge frames.
+			</p>
+
+			<h3><a name="gadgets" href="#gadgets">Discussion: protocol gadgets</a></h3>
+
+			<p>
+			One common theme in our new work is that <strong>seemingly innocent bugs, and even protocol features, can act as essential gadgets when trying to exploit (implementation-specific) protocol bugs</strong>.
+			For example, on its own the technique to generate encrypted handshake messages is innocent.
+			However, this technique allowed us to perform key reinstallation attacks against more devices than previously thought possible.
+			Similarly, a bug in Linux allowing an insider to spoof the source and destination address, had little impact on its own.
+			Unfortunately, this bug proved essential to trigger key reinstallations against certain versions of wpa_supplicant.
+			As another example, having separate receive replay counters for each Quality-of-Service (QoS) channel is also not a security risk on its own.
+			However, this protocol feature allowed us to attack the group key and TPK handshake.
+			In other words, seemingly innocent protocol features or implementation bugs can act as essential gadgets that enable exploitation of other vulnerabilities.
+			</p>
+
+			<p>
+			The most intriguing example is that users <a href="https://w1.fi/cgit/hostap/commit/?id=ad00d64e7d8827b3cebd665a0ceb08adabf15e1e">noticed that some versions of wpa_supplicant were installing an all-zero key</a> upon receiving a retransmitted message 3.
+			However, they did not realize an adversary could actively trigger these retransmissions, and therefore only treated this as an innocent bug.
+			In a sense they almost discovered key reinstallation attacks, but failed to realize the capabilities of an adversary, and because of that did not realize this was an exploitable bug.
+			</p>
+
+			<p>
+			These observations teach us that <strong>it can be very difficult to determine whether a protocol bug is exploitable or not</strong>.
+			In other words, one needs an expert understanding of all available gadgets, i.e., related protocol features and implementations bugs.
+			Only when having this knowledge is it possible to accurately determine whether, and under which conditions, a protocol bug is exploitable.
+			</p>
+
+			<h3><a name="conclusion" href="#conclusion">Conclusion</a></h3>
+
+			<p>
+			Our results show that <strong>preventing key reinstallations is harder than initially assumed</strong>.
+			For example, we were able to bypass Wi-Fi's official countermeasure and reinstall the group key.
+			Additionally, we showed that the FILS handshake is vulnerable to key reinstallation attacks,
+			and we also discovered novel implementation-specific vulnerabilities that facilitate key (re)installation attacks.
+			</p>
+
+			<p>
+			We believe the main reason vulnerabilities are still present
+			is because the Wi-Fi standard is large,
+			is continually being expanded with new features,
+			and requires domain-specific knowledge to understand.
+			These obstacles can be overcome by having high-level descriptions (or formal models) of all security-related features of Wi-Fi.
+			This would make it easier to reason about its design, and test the correctness of implementations.
+			Additionally, we believe the Wi-Fi Alliance should not only test products for interoperability, but also fuzz them for vulnerabilities.
+			</p>
+
+		<!-------------------- PAPER -------------------->
+
+		<a name="paper" ></a>
+		<h2>Paper</h2>
+		
+		<p>Our research paper behind the attack is titled <a href="https://papers.mathyvanhoef.com/ccs2018.pdf">Release the Kraken: New KRACKs in the 802.11 Standard</a> and will be presented at the <a href="https://www.sigsac.org/ccs/CCS2018/">Computer and Communications Security (CCS)</a> conference in October 2018.
+
+		<a name="citeme"></a>
+		<p>To cite our paper, you can use the following example citation or bibtex entry:</p>
+		<div class="indent">
+			<p>Mathy Vanhoef and Frank Piessens. 2018. Release the Kraken: New KRACKs in the 802.11 Standard. In 2018 ACM SIGSAC Conference on Computer and Communications Security (CCS ’18). ACM.</p>
+			<pre class="code">@inproceedings{vanhoef-ccs2018,
+  author        = {Mathy Vanhoef and Frank Piessens},
+  title         = {Release the Kraken: new {KRACKs} in the 802.11 Standard},
+  booktitle     = {Proceedings of the 25th ACM Conference on Computer and Communications Security (CCS)},
+  year          = {2018},
+  publisher     = {ACM}
+}</pre>
+		</div>
+		
+		<!-------------------- Tools -------------------->
+			
+		<a name="tools"></a>
+		<h2>New tools</h2>
+		<p>Our proof-of-concept <a href="https://github.com/vanhoefm/krackattacks-poc-zerokey">script to perform key reinstallation attacks</a> is now available on github.
+		It targets Android and Linux devices that (re)install an all-zero key.
+		This script is also the one that we used in the <a href="https://www.krackattacks.com/#demo">demonstration video</a> last year.
+		We successfully tested it in a lab setup against Chromium and Android.
+		The script uses Channel Switch Announcements to establish a channel-based man-in-the-middle.
+		</p>
+		<p>
+		We remark that the reliability of our proof-of-concept script depends on how close the victim is to the real network.
+		If the victim is close to the real network, the script may fail because the victim will always directly communicate with the real network,
+		even if the victim is (forced) to use a Wi-Fi channel different from the real network.
+		</p>
+		
+		<!-------------------- Q&A -------------------->
+
+		<a name="faq" ></a>
+		<h2>Q&amp;A</h2>
+
+			<ul>
+				<li><a href="#whywebsite">Why did you make a website about these new results?</a></li>
+				<li><a href="#wpa3">Will WPA3 prevent all key reinstallation attacks?</a></li>
+				<li><a href="#owe">Could Oppertunistic Wireless Encryption (OWE) also be vulnerable to KRACK?</a></li>
+				<li><a href="#rt-ac51u">Are the key reinstallations in the RT-AC51U fixed?</a></li>
+				<li><a href="#apple">When did Apple fix the additional vulnerabilities?</a></li>
+				<li><a href="#standard">Has the Wi-Fi standard been updated in the meantime?</a></li>
+				<li><a href="#introspection">Looking back, how serious do you think the original KRACK attack was?</a></li>
+			</ul>
+
+			<a name="whywebsite" ></a>
+			<h3>Why did you make a website about these new results?</h3>
+			<p>
+			To clearly state that our new results are not as serious as the original key reinstallation attacks.
+			Several new attacks mentioned in the paper are implementation-specific,
+			and the attack against the TPK handshake was already patched during the coordinated disclosure last year.
+			Similarly, key reinstallations caused by WNM frames were also already patched last year.
+			However, in our new paper we describe for the first time how these (already disclosed) vulnerabilities can be exploited.
+			Finally, the method to bypass Wi-Fi's official defense can only be abused to reinstall the (integrity) group key,
+			and is non-trivial to execute in practice.
+			Nevertheless, it is good to <strong>make people aware that fully preventing KRACK attacks is hard in practice</strong>,
+			meaning it is important to keep checking whether devices are properly patched.
+			</p>
+
+			<a name="wpa3" ></a>
+			<h3>Will WPA3 prevent KRACK?</h3>
+			<p>
+			On its own WPA3 does not prevent key reinstallation attacks.
+			So a WPA3-capable device may be still vulnerable to KRACK.
+			That's because internally WPA3 still uses the 4-way handshake (in combination with the new Dragonfly handshake).
+			In other words, if a vendor does not properly implement the 4-way handshake, a WPA3 network may be vulnerable to KRACK.
+			<!--
+			TODO: Need a citable source before claiming this publicly.
+			That said, if a device is WPA3-<string>certified</string> by the Wi-Fi Alliance, then it is not vulnerable to KRACK.
+			-->
+			</p>
+
+			<a name="owe" ></a>
+			<h3>Does KRACK also affect Opportunistic Wireless Encryption (OWE)?</h3>
+			<p>
+			It could.
+			Opportunistic Wireless Encryption (called Enhanced Open by the Wi-Fi Alliance) internally still uses the 4-way handshake
+			(in addition to an unauthenticated Diffie-Hellman handshake).
+			So if a vendor does not properly implement the 4-way handshake, an OWE network may also be vulnerable to KRACK.
+			</p>
+
+			<a name="rt-ac51u" ></a>
+			<h3>Are the key reinstallations in the RT-AC51U fixed?</h3>
+			<p>
+			Based on the <a href="https://www.asus.com/us/Networking/RTAC51U/HelpDesk_BIOS/">firmware update history</a>,
+			the RT-AC51U router has not yet received a patched.
+			</p>
+
+			<a name="apple" ></a>
+			<h3>When did Apple fix the additional vulnerabilities?</h3>
+			<p>
+			We do not know precisely when Apple patched the vulnerabilities mentioned in the paper,
+			because the corresponding patches are not mentioned in Apple's security update notes.
+			Based on our own tests, we know that the improper installation of the group key (GTK) was fixed in iOS 12.0 and above.
+			Similarly, the SNonce reuse vulnerability was fixed in macOS High Seirra 10.13.3 and above.
+			Do note that these vulnerabilities might have already been fixed in earlier versions,
+			unfortunately, we are not able to test older versions ourselves.
+			</p>
+
+			<a name="standard" ></a>
+			<h3>Has the Wi-Fi standard been updated in the meantime?</h3>
+			<p>
+			After the disclosure of key reinstallation attacks last years,
+			the Wi-Fi standard was updated to <a href="https://mentor.ieee.org/802.11/dcn/17/11-17-1602-03-000m-nonce-reuse-prevention.docx">prevent most attacks</a>.
+			However, even with this update, it is still possible to force a victim to temporarily install a new group key, to then reinstall an old group key.
+			This allows an adversary to replay broadcast and multicast frames towards the victim.
+			Abusing this remaining vulnerability is non-trivial, and has a low impact in practice.
+			Nevertheless, it would be better to update the Wi-Fi standard such that all key reinstallation attacks are prevented.
+			</p>
+
+			<a name="introspection" ></a>
+			<h3>Looking back, how serious do you think the original KRACK attack was?</h3>
+			<p>
+			The original KRACK attack highlighted a weakness in the core of the WPA2 standard,
+			and practically all clients were affected by some variant of the attack.
+			This was very surprising, considering the core of WPA2 was formally proven secure,
+			and over its decade-long lifetime,
+			there were no known attacks against it (assuming a strong password is used).
+			Therefore the impact was quite serious and unexpected.
+			</p>
+			<p>
+			Thankfully, in practice it appears few people are abusing KRACK.
+			We attribute this to two important factors.
+			First, thanks to the coordinated disclosure last year, a significant proportion of devices were quickly patched
+			(even though some devices took a really long time to receive updates).
+			Second, we purposely did not release our attack tools, making it non-trivial for others to abuse KRACK in practice.
+			Even the tools we released now are purposely not fully weaponized, to prevent people from easily performing KRACK attacks in practice.
+			</p>
+						
+		<!-------------------- END OF MAIN CONTENT -------------------->
+<div type="margin: 0px auto;">            
+</div>
+        </div>
+	</div>
+</div>
+
+<div id="copyright" class="container">
+	<p><a  rel="license" href="http://creativecommons.org/licenses/by/4.0/" style="letter-spacing: normal;">
+        Creative Commons Attribution 4.0 International License</a> | Design inspired by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
+</div>
+<script type="text/javascript">
+/**
+ * Mobile Menu
+ */
+ 
+(function ($) {
+	function close_menu() {
+		$('a#menu_button').removeClass('responsive-toggle-open');
+		$('#menu_title').css('background', '');
+		// So menu still works after being used, and window is resized
+		$('.js #main-nav .menu').removeAttr('style');
+	}
+	var current = $('span.custom-mobile-menu-title').html();
+	$('#main-nav').append('<a id="menu_button"></a>');
+	$('#main-nav').prepend('<div id="menu_title">' + current + '</div>');
+	$('a#menu_button, #menu_title').click(function (e) {
+		e.stopPropagation();
+		$('#menu_title').css('background', '#008C9A');
+		$('.js #main-nav .menu').slideToggle(function () {
+			if ($(this).is(':visible')) {
+				$('a#menu_button').addClass('responsive-toggle-open');
+			}
+			else {
+				close_menu();
+			}
+		});
+	});
+	// Close the mobile menu when clicked outside of it.
+	$('html').click(function () {
+		// Check if the menu is open, close in that case.
+		if ($('a#menu_button').hasClass('responsive-toggle-open')) {
+			$('.js #main-nav .menu').slideToggle(function () {
+				close_menu();
+			});
+		}
+	});
+    
+    // Catch click events outside menu on iOS: https://gist.github.com/danott/855078
+    Modernizr.addTest('ipad', function () {
+        return !!navigator.userAgent.match(/iPad/i);
+    });
+    Modernizr.addTest('iphone', function () {
+        return !!navigator.userAgent.match(/iPhone/i);
+    });
+    Modernizr.addTest('ipod', function () {
+        return !!navigator.userAgent.match(/iPod/i);
+    });
+    Modernizr.addTest('appleios', function () {
+        return (Modernizr.ipad || Modernizr.ipod || Modernizr.iphone);
+    });
+
+    if (Modernizr.appleios) {
+        $("html").addClass("clickable");
+    }
+})(jQuery);
+
+</script>
+</body>
+</html>
